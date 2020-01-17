@@ -1,6 +1,6 @@
-import { CREATE_USER, CREATE_TODOS } from "./types";
+import { CREATE_USER, CREATE_TODO } from "./types";
 
-export const createUsers = (name, email) => {
+export const createUser = (name, email) => {
   return {
     type: CREATE_USER,
     payload: {
@@ -10,11 +10,11 @@ export const createUsers = (name, email) => {
   };
 };
 
-export const createTodos = (action, dateAdded) => {
+export const createTodo = (name, dateAdded) => {
   return {
-    type: CREATE_TODOS,
+    type: CREATE_TODO,
     payload: {
-      action,
+      name,
       dateAdded
     }
   };

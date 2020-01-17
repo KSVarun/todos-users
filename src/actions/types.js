@@ -1,5 +1,5 @@
 export const CREATE_USER = "CREATE_USER";
-export const CREATE_TODOS = "CREATE_TODOS";
+export const CREATE_TODO = "CREATE_TODOS";
 
 export const FETCH_TODOS = "FETCH_TODOS";
 export const FETCH_USERS = "FETCH_USERS";

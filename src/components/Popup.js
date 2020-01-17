@@ -1,51 +1,43 @@
 import React from "react";
-import { Modal, Input } from "antd";
+import { Modal, Input, Button } from "antd";
 import { Formik, Field, Form } from "formik";
+import { connect } from "react-redux";
+
+import { createUser } from "../actions";
+import history from "./history";
 
 class Popup extends React.Component {
-  state = { visible: false };
-  showModal = () => {
-    this.setState({
-      visible: true
-    });
-  };
-
-  handleOk = e => {
-    console.log(e);
-    this.setState({
-      visible: false
-    });
-  };
-
-  handleCancel = e => {
-    console.log(e);
-    this.setState({
-      visible: false
-    });
-  };
-  render() {
+  render = () => {
     return (
-      <Modal
-        title={this.props.title}
-        visible={this.state.visible}
-        onOk={this.handleOk}
-        onCancel={this.handleCancel}
-      >
+      <div>
         <Formik
-          initialValues={{ NAME: "", EMAIL: "" }}
+          initialValues={{ name: "varun", email: "varun@gmail.com" }}
           onSubmit={data => {
-            console.log(data);
+            this.props.createUser(data.name, data.email);
+            history.push("/");
           }}
         >
-          {({ values }) => (
-            <Form>
-              <Field name="NAME" type="text" as={Input}></Field>
-            </Form>
+          {({ values, handleSubmit }) => (
+            <form>
+              <div>
+                <label>Name</label>
+                <Field name="name" type="text" as={Input}></Field>
+              </div>
+              <div>
+                <label>Email</label>
+                <Field name="email" type="text" as={Input}></Field>
+              </div>
+              <div style={{ marginTop: "10px" }}>
+                <Button type="submit" onClick={handleSubmit}>
+                  Submit
+                </Button>
+              </div>
+            </form>
           )}
         </Formik>
-      </Modal>
+      </div>
     );
-  }
+  };
 }
 
-export default Popup;
+export default connect(null, { createUser })(Popup);
