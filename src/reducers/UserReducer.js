@@ -1,4 +1,9 @@
-import { CREATE_USER, FETCH_USER, FETCH_USERS } from "../actions/types";
+import {
+  CREATE_USER,
+  FETCH_USER,
+  FETCH_USERS,
+  DELETE_USER
+} from "../actions/types";
 import produce from "immer";
 const INITIAL_STATE = {
   users: {},
@@ -28,7 +33,19 @@ export default function UserReducer(state = INITIAL_STATE, action) {
 
       case FETCH_USER:
         return draft.users[action.payload];
-
+      case DELETE_USER:
+        if (draft.users[action.payload.key]) {
+          delete draft.users[action.payload.key];
+          var len = Object.keys(draft.users).length;
+          if (len >= 0) {
+            draft.tableData = [];
+            Object.keys(draft.users).map(user =>
+              draft.tableData.push(draft.users[user])
+            );
+          }
+        }
+        // draft.tableData.filter(data => data.key !== action.payload.key);
+        break;
       default:
         break;
     }

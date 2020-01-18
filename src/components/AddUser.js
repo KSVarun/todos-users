@@ -60,9 +60,9 @@ class AddUser extends React.Component {
                 <Field name="name" type="text" as={Input}></Field>
               </FormItem>
               <FormItem
-                help={touched.name && errors.name ? errors.name : ""}
+                help={touched.email && errors.email ? errors.email : ""}
                 validateStatus={
-                  touched.name && errors.name ? "error" : undefined
+                  touched.email && errors.email ? "error" : undefined
                 }
               >
                 <label>Email</label>

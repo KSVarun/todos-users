@@ -3,11 +3,16 @@ import { Table, Divider } from "antd";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
-import { fetchTodos } from "../actions";
+import { fetchTodos, deleteTodo } from "../actions";
 
 class Tables extends React.Component {
+  state = { data: true };
   componentDidMount() {
     this.props.fetchTodos();
+  }
+  handleDelete(key) {
+    this.props.deleteTodo(key);
+    // this.componentDidMount();
   }
   renderColumnHelper() {
     const columns = [
@@ -28,7 +33,9 @@ class Tables extends React.Component {
           <span>
             <Link to={`/editTodo/${record.key}`}>Edit</Link>
             <Divider type="vertical" />
-            <Link to="">Delete</Link>
+            <Link to="" onClick={() => this.handleDelete(record.key)}>
+              Delete
+            </Link>
           </span>
         )
       }
@@ -60,4 +67,4 @@ const mapStateToProps = state => {
   return state;
 };
 
-export default connect(mapStateToProps, { fetchTodos })(Tables);
+export default connect(mapStateToProps, { fetchTodos, deleteTodo })(Tables);
