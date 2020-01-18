@@ -1,7 +1,14 @@
 import React from "react";
 import { Table, Divider } from "antd";
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
+
+import { fetchUsers } from "../actions";
 
 class Tables extends React.Component {
+  componentDidMount() {
+    this.props.fetchUsers();
+  }
   renderColumnHelper() {
     const columns = [
       {
@@ -14,9 +21,9 @@ class Tables extends React.Component {
         key: "action",
         render: (text, record) => (
           <span>
-            <a>Edit</a>
+            <Link to={`/editUser/${record.key}`}>Edit</Link>
             <Divider type="vertical" />
-            <a>Delete</a>
+            <Link to="">Delete</Link>
           </span>
         )
       }
@@ -24,21 +31,9 @@ class Tables extends React.Component {
     return columns;
   }
 
-  renderDataHelper() {
-    const data = [
-      {
-        key: "1",
-        name: "John Brown"
-      },
-      {
-        key: "2",
-        name: "Jim Green"
-      },
-      {
-        key: "3",
-        name: "Joe Black"
-      }
-    ];
+  renderDataHelper(tableData) {
+    //debugger;
+    const data = tableData;
     return data;
   }
 
@@ -47,7 +42,7 @@ class Tables extends React.Component {
       <div>
         <Table
           columns={this.renderColumnHelper()}
-          dataSource={this.renderDataHelper()}
+          dataSource={this.renderDataHelper(this.props.users.tableData)}
           style={{ marginTop: "10px" }}
         />
       </div>
@@ -55,4 +50,9 @@ class Tables extends React.Component {
   }
 }
 
-export default Tables;
+const mapStateToProps = state => {
+  console.log(state);
+  return state;
+};
+
+export default connect(mapStateToProps, { fetchUsers })(Tables);

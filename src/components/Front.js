@@ -1,22 +1,22 @@
 import React from "react";
 import { Tabs } from "antd";
-import Tables from "./Tables";
-import { render } from "@testing-library/react";
 import Sections from "./Sections";
+import UserTable from "./UserTable";
+import TodoTable from "./TodoTable";
 
 class Front extends React.Component {
   render() {
     const { TabPane } = Tabs;
     return (
       <div className="ui container">
-        <Tabs defaultActiveKey="1">
+        <Tabs defaultActiveKey="2">
           <TabPane tab="Todos" key="1">
-            <Sections buttonName="Create Todos" />
-            <Tables />
+            <Sections buttonName="Create Todos" goto="/addTodo" />
+            <TodoTable />
           </TabPane>
           <TabPane tab="Users" key="2">
-            <Sections buttonName="Create Users" />
-            <Tables />
+            <Sections buttonName="Create Users" goto="/addUser" />
+            <UserTable />
           </TabPane>
         </Tabs>
       </div>

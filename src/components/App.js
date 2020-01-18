@@ -1,11 +1,10 @@
 import React from "react";
-import { Tabs } from "antd";
 import { Router, Route, Switch } from "react-router-dom";
 
-import Sections from "./Sections";
 import Front from "./Front";
 import history from "./history";
-import Popup from "./Popup";
+import AddUser from "./AddUser";
+import AddTodo from "./AddTodo";
 
 const App = () => {
   return (
@@ -14,7 +13,10 @@ const App = () => {
         <div>
           <Switch>
             <Route path="/" exact component={Front} />
-            <Route path="/Userform" exact component={Popup} />
+            <Route path="/addUser" exact component={AddUser} />
+            <Route path="/addTodo" exact component={AddTodo} />
+            <Route path="/editUser/:key" exact component={AddUser} />
+            <Route path="/editTodo/:key" exact component={AddTodo} />
           </Switch>
         </div>
       </Router>

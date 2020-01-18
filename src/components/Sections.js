@@ -1,17 +1,18 @@
 import React from "react";
 import { Button } from "antd";
-
-import { Link } from "react-router-dom";
-
-import { createUser, createTodos } from "../actions";
+import history from "./history";
 
 class Sections extends React.Component {
   render() {
+    const goto = this.props.goto;
     return (
       <div>
-        <Link to="/userform" title={this.props.buttonName}>
+        <Button
+          onClick={() => history.push(goto)}
+          title={this.props.buttonName}
+        >
           {this.props.buttonName}
-        </Link>
+        </Button>
       </div>
     );
   }
