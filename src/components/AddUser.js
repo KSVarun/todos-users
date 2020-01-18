@@ -1,11 +1,24 @@
 import React from "react";
-import { Modal, Input, Button } from "antd";
+import { Modal, Input, Button, Form } from "antd";
 import { Formik, Field } from "formik";
 import { connect } from "react-redux";
+import * as yup from "yup";
 
 import { createUser, fetchUser } from "../actions";
 import history from "./history";
 
+const FormItem = Form.Item;
+
+const validationSchema = yup.object({
+  name: yup
+    .string()
+    .required("This field is required")
+    .max(20),
+  email: yup
+    .string()
+    .email("Provide an valid email")
+    .required("This field is required")
+});
 class AddUser extends React.Component {
   componentDidMount() {
     this.props.fetchUser(this.props.match.params.key);
@@ -25,30 +38,42 @@ class AddUser extends React.Component {
     }
     return (
       <div className="ui container" style={{ marginTop: "10px" }}>
-        <h2>Add Todo</h2>
+        <h2>Add User</h2>
         <Formik
+          validateOnChange={true}
           initialValues={{ name: nameValue, email: emailValue }}
+          validationSchema={validationSchema}
           onSubmit={data => {
             this.props.createUser(data.email, data.name);
             history.push("/");
           }}
         >
-          {({ values, handleSubmit }) => (
+          {({ values, handleSubmit, errors, touched }) => (
             <form>
-              <div>
+              <FormItem
+                help={touched.name && errors.name ? errors.name : ""}
+                validateStatus={
+                  touched.name && errors.name ? "error" : undefined
+                }
+              >
                 <label>Name</label>
                 <Field name="name" type="text" as={Input}></Field>
-              </div>
-              <div>
+              </FormItem>
+              <FormItem
+                help={touched.name && errors.name ? errors.name : ""}
+                validateStatus={
+                  touched.name && errors.name ? "error" : undefined
+                }
+              >
                 <label>Email</label>
                 <Field name="email" type="text" as={Input}></Field>
-              </div>
+              </FormItem>
               <div style={{ marginTop: "10px" }}>
                 <Button type="primary" onClick={handleSubmit}>
                   Submit
                 </Button>
                 <Button type="danger" onClick={this.handleCancle}>
-                  Cancle
+                  Cancel
                 </Button>
               </div>
             </form>

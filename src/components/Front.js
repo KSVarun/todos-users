@@ -9,7 +9,7 @@ class Front extends React.Component {
     const { TabPane } = Tabs;
     return (
       <div className="ui container">
-        <Tabs defaultActiveKey="2">
+        <Tabs defaultActiveKey="1">
           <TabPane tab="Todos" key="1">
             <Sections buttonName="Create Todos" goto="/addTodo" />
             <TodoTable />

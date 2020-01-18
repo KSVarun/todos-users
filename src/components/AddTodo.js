@@ -1,12 +1,21 @@
 import React from "react";
-import { Modal, Input, Button } from "antd";
+import { Modal, Input, Button, Form } from "antd";
 import { Formik, Field } from "formik";
 import { connect } from "react-redux";
 import moment from "moment";
+import * as yup from "yup";
 
 import { createTodo, fetchTodo } from "../actions";
 import history from "./history";
 
+const FormItem = Form.Item;
+
+const validationSchema = yup.object({
+  name: yup
+    .string()
+    .required("This field is required")
+    .max(20)
+});
 class AddTodo extends React.Component {
   componentDidMount() {
     this.props.fetchTodo(this.props.match.params.key);
@@ -14,7 +23,9 @@ class AddTodo extends React.Component {
   handleCancle() {
     history.push("/");
   }
+
   render = () => {
+    console.log(this.props);
     const date = moment().format("Do MMM YYYY HH:mm:ss");
     var nameValue = "";
     var dateValue = "";
@@ -30,28 +41,36 @@ class AddTodo extends React.Component {
       <div className="ui container" style={{ marginTop: "10px" }}>
         <h2>Add Todo</h2>
         <Formik
+          validateOnChange={true}
           initialValues={{ name: nameValue, created: dateValue }}
+          validationSchema={validationSchema}
           onSubmit={data => {
             this.props.createTodo(data.created, data.name);
             history.push("/");
           }}
         >
-          {({ values, handleSubmit }) => (
+          {({ values, errors, handleSubmit, touched }) => (
             <form>
-              <div>
+              <FormItem
+                help={touched.name && errors.name ? errors.name : ""}
+                validateStatus={
+                  touched.name && errors.name ? "error" : undefined
+                }
+              >
                 <label>Name</label>
                 <Field name="name" type="text" as={Input}></Field>
-              </div>
-              <div>
+              </FormItem>
+
+              <FormItem>
                 <label>Created</label>
                 <Field name="created" type="text" as={Input}></Field>
-              </div>
+              </FormItem>
               <div style={{ marginTop: "10px" }}>
                 <Button type="primary" onClick={handleSubmit}>
                   Submit
                 </Button>
                 <Button type="danger" onClick={this.handleCancle}>
-                  Cancle
+                  Cancel
                 </Button>
               </div>
             </form>
