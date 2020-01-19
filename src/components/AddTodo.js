@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal, Input, Button, Form } from "antd";
+import { Input, Button, Form } from "antd";
 import { Formik, Field } from "formik";
 import { connect } from "react-redux";
 import moment from "moment";
@@ -7,6 +7,7 @@ import * as yup from "yup";
 
 import { createTodo, fetchTodo } from "../actions";
 import history from "./history";
+import Popup from "./Popup";
 
 const FormItem = Form.Item;
 
@@ -25,7 +26,6 @@ class AddTodo extends React.Component {
   }
 
   render = () => {
-    console.log(this.props);
     const date = moment().format("Do MMM YYYY HH:mm:ss");
     var nameValue = "";
     var dateValue = "";
@@ -46,7 +46,6 @@ class AddTodo extends React.Component {
           validationSchema={validationSchema}
           onSubmit={data => {
             this.props.createTodo(data.created, data.name);
-            history.push("/");
           }}
         >
           {({ values, errors, handleSubmit, touched }) => (
@@ -69,7 +68,11 @@ class AddTodo extends React.Component {
                 <Button type="primary" onClick={handleSubmit}>
                   Submit
                 </Button>
-                <Button type="danger" onClick={this.handleCancle}>
+                <Button
+                  type="danger"
+                  onClick={this.handleCancle}
+                  style={{ marginLeft: "5px" }}
+                >
                   Cancel
                 </Button>
               </div>

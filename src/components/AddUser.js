@@ -72,7 +72,11 @@ class AddUser extends React.Component {
                 <Button type="primary" onClick={handleSubmit}>
                   Submit
                 </Button>
-                <Button type="danger" onClick={this.handleCancle}>
+                <Button
+                  type="danger"
+                  onClick={this.handleCancle}
+                  style={{ marginLeft: "5px" }}
+                >
                   Cancel
                 </Button>
               </div>

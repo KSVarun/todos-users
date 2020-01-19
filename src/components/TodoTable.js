@@ -12,7 +12,6 @@ class Tables extends React.Component {
   }
   handleDelete(key) {
     this.props.deleteTodo(key);
-    // this.componentDidMount();
   }
   renderColumnHelper() {
     const columns = [
@@ -44,7 +43,6 @@ class Tables extends React.Component {
   }
 
   renderDataHelper(tableData) {
-    //debugger;
     const data = tableData;
     return data;
   }
@@ -63,7 +61,6 @@ class Tables extends React.Component {
 }
 
 const mapStateToProps = state => {
-  console.log(state);
   return state;
 };
 

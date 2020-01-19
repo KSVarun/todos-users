@@ -37,7 +37,6 @@ class Tables extends React.Component {
   }
 
   renderDataHelper(tableData) {
-    //debugger;
     const data = tableData;
     return data;
   }
