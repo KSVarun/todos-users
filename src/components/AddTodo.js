@@ -46,6 +46,7 @@ class AddTodo extends React.Component {
           validationSchema={validationSchema}
           onSubmit={data => {
             this.props.createTodo(data.created, data.name);
+            history.push("/");
           }}
         >
           {({ values, errors, handleSubmit, touched }) => (
