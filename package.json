@@ -1,5 +1,4 @@
 {
-  "homepage": "http://KSVarun.github.io/todousers/",
   "name": "todos",
   "version": "0.1.0",
   "private": true,
@@ -11,7 +10,6 @@
     "babel-plugin-import": "^1.13.0",
     "customize-cra": "^0.9.1",
     "formik": "^2.1.2",
-    "gh-pages": "^2.2.0",
     "immer": "^5.3.2",
     "less": "^3.10.3",
     "less-loader": "^5.0.0",
@@ -26,8 +24,6 @@
     "yup": "^0.28.0"
   },
   "scripts": {
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
     "test": "react-app-rewired test",
