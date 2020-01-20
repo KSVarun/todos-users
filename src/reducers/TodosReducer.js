@@ -22,7 +22,7 @@ export default function TodosReducer(state = INITIAL_STATE, action) {
         break;
 
       case FETCH_TODOS:
-        var len = Object.keys(draft.todos).length;
+        const len = Object.keys(draft.todos).length;
         if (len) {
           draft.tableData = [];
           Object.keys(draft.todos).map(todo =>
@@ -37,7 +37,7 @@ export default function TodosReducer(state = INITIAL_STATE, action) {
       case DELETE_TODO:
         if (draft.todos[action.payload.key]) {
           delete draft.todos[action.payload.key];
-          var len = Object.keys(draft.todos).length;
+          const len = Object.keys(draft.todos).length;
           if (len >= 0) {
             draft.tableData = [];
             Object.keys(draft.todos).map(todo =>

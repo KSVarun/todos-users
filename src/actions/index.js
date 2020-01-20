@@ -6,7 +6,9 @@ import {
   DELETE_USER,
   FETCH_TODO,
   FETCH_TODOS,
-  DELETE_TODO
+  DELETE_TODO,
+  TODOS_ACTIVE,
+  USERS_ACTIVE
 } from "./types";
 
 export const createUser = (key, name) => {
@@ -68,5 +70,19 @@ export const deleteTodo = key => {
   return {
     type: DELETE_TODO,
     payload: { key }
+  };
+};
+
+export const todosActive = () => {
+  return {
+    type: TODOS_ACTIVE,
+    payload: {}
+  };
+};
+
+export const usersActive = () => {
+  return {
+    type: USERS_ACTIVE,
+    payload: {}
   };
 };

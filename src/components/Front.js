@@ -1,5 +1,6 @@
 import React from "react";
 import { Tabs } from "antd";
+import { connect } from "react-redux";
 import Sections from "./Sections";
 import UserTable from "./UserTable";
 import TodoTable from "./TodoTable";
@@ -9,12 +10,12 @@ class Front extends React.Component {
     const { TabPane } = Tabs;
     return (
       <div className="ui container">
-        <Tabs defaultActiveKey="1">
-          <TabPane tab="Todos" key="1">
+        <Tabs defaultActiveKey={this.props.tab}>
+          <TabPane tab="Todos" key="todos">
             <Sections buttonName="Create Todos" goto="/addTodo" />
             <TodoTable />
           </TabPane>
-          <TabPane tab="Users" key="2">
+          <TabPane tab="Users" key="users">
             <Sections buttonName="Create Users" goto="/addUser" />
             <UserTable />
           </TabPane>
@@ -23,5 +24,9 @@ class Front extends React.Component {
     );
   }
 }
+const mapStateToProps = state => {
+  const { active } = state;
+  return active;
+};
 
-export default Front;
+export default connect(mapStateToProps)(Front);

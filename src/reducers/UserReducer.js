@@ -22,7 +22,7 @@ export default function UserReducer(state = INITIAL_STATE, action) {
         break;
 
       case FETCH_USERS:
-        var len = Object.keys(draft.users).length;
+        const len = Object.keys(draft.users).length;
         if (len) {
           draft.tableData = [];
           Object.keys(draft.users).map(user =>
@@ -36,7 +36,7 @@ export default function UserReducer(state = INITIAL_STATE, action) {
       case DELETE_USER:
         if (draft.users[action.payload.key]) {
           delete draft.users[action.payload.key];
-          var len = Object.keys(draft.users).length;
+          const len = Object.keys(draft.users).length;
           if (len >= 0) {
             draft.tableData = [];
             Object.keys(draft.users).map(user =>
