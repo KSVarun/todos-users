@@ -5,19 +5,21 @@ import { connect } from "react-redux";
 import { todosActive, usersActive } from "../actions";
 
 class Sections extends React.Component {
-  componentDidMount() {
-    if (this.props.buttonName === "Create Todos") {
+  handleClick(data) {
+    if (data.buttonName === "Create Todos") {
       this.props.todosActive();
-    } else {
+    } else if (data.buttonName === "Create Users") {
       this.props.usersActive();
     }
+    history.push(data.goto);
   }
   render() {
-    const goto = this.props.goto;
     return (
       <div>
         <Button
-          onClick={() => history.push(goto)}
+          onClick={() => {
+            this.handleClick(this.props);
+          }}
           title={this.props.buttonName}
         >
           {this.props.buttonName}

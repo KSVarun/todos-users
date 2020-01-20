@@ -67,7 +67,7 @@ class AddTodo extends React.Component {
               </FormItem>
               <div style={{ marginTop: "10px" }}>
                 <Button type="primary" onClick={handleSubmit}>
-                  Submit
+                  Save
                 </Button>
                 <Button
                   type="danger"
