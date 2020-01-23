@@ -2,10 +2,12 @@ import { combineReducers } from "redux";
 
 import users from "./UserReducer";
 import todos from "./TodosReducer";
-import active from "./TabSelectorReducer";
+import userForm from "./UserFormReducer";
+import todoForm from "./TodoFormReducer";
 
 export default combineReducers({
   users,
   todos,
-  active
+  userForm,
+  todoForm
 });

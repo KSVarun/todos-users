@@ -1,50 +1,34 @@
-import {
-  CREATE_USER,
-  FETCH_USER,
-  FETCH_USERS,
-  DELETE_USER
-} from "../actions/types";
 import produce from "immer";
+import uuid from "uuid/v4";
+import { CREATE_USER, DELETE_USER, UPDATE_USER } from "../actions/usersActions";
+
 const INITIAL_STATE = {
-  users: {},
-  tableData: []
+  users: []
 };
 
 export default function UserReducer(state = INITIAL_STATE, action) {
   return produce(state, draft => {
     switch (action.type) {
       case CREATE_USER:
-        if (draft.users[action.payload.key]) {
-          delete draft.users[action.payload.key];
-        }
-        var key = action.payload.key;
-        draft.users[key] = { ...action.payload };
+        draft.users.push({
+          ...action.payload.data,
+          key: uuid()
+        });
         break;
 
-      case FETCH_USERS:
-        const len = Object.keys(draft.users).length;
-        if (len) {
-          draft.tableData = [];
-          Object.keys(draft.users).map(user =>
-            draft.tableData.push(draft.users[user])
-          );
-        }
+      case UPDATE_USER:
+        const user = draft.users.find(
+          user => user.key === action.payload.data.key
+        );
+        user.name = action.payload.data.name;
+        user.email = action.payload.data.email;
+
         break;
 
-      case FETCH_USER:
-        return draft.users[action.payload];
       case DELETE_USER:
-        if (draft.users[action.payload.key]) {
-          delete draft.users[action.payload.key];
-          const len = Object.keys(draft.users).length;
-          if (len >= 0) {
-            draft.tableData = [];
-            Object.keys(draft.users).map(user =>
-              draft.tableData.push(draft.users[user])
-            );
-          }
-        }
-        // draft.tableData.filter(data => data.key !== action.payload.key);
+        draft.users = draft.users.filter(
+          user => user.key !== action.payload.key
+        );
         break;
       default:
         break;

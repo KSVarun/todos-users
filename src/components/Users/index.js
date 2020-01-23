@@ -1,14 +1,12 @@
 import React from "react";
-import { Table, Divider } from "antd";
+import { Table, Divider, Button } from "antd";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
 
-import { fetchUsers, deleteUser } from "../actions";
+import { deleteUser } from "../../actions/usersActions";
+import UserFormModal from "./UserFormModal";
+import { openUserModal } from "../../actions/userModalActions";
 
-class Tables extends React.Component {
-  componentDidMount() {
-    this.props.fetchUsers();
-  }
+class UserTables extends React.Component {
   handleDelete(key) {
     this.props.deleteUser(key);
   }
@@ -24,11 +22,15 @@ class Tables extends React.Component {
         key: "action",
         render: (text, record) => (
           <span>
-            <Link to={`/editUser/${record.key}`}>Edit</Link>
+            <Button
+              onClick={() => this.props.openUserModal("edit", record.key)}
+            >
+              Edit
+            </Button>
             <Divider type="vertical" />
-            <Link to="" onClick={() => this.handleDelete(record.key)}>
+            <Button onClick={() => this.props.deleteUser(record.key)}>
               Delete
-            </Link>
+            </Button>
           </span>
         )
       }
@@ -46,16 +48,20 @@ class Tables extends React.Component {
       <div>
         <Table
           columns={this.renderColumnHelper()}
-          dataSource={this.renderDataHelper(this.props.users.tableData)}
+          dataSource={this.renderDataHelper(this.props.users.users)}
           style={{ marginTop: "10px" }}
         />
+        <UserFormModal />
       </div>
     );
   }
 }
 
 const mapStateToProps = state => {
-  return state;
+  return { users: state.users };
 };
 
-export default connect(mapStateToProps, { fetchUsers, deleteUser })(Tables);
+export default connect(mapStateToProps, {
+  deleteUser,
+  openUserModal
+})(UserTables);

@@ -1,18 +1,18 @@
 import React from "react";
 import { Button } from "antd";
-import history from "./history";
 import { connect } from "react-redux";
-import { todosActive, usersActive } from "../actions";
+
+import { openUserModal } from "../actions/userModalActions";
+import { openTodoModal } from "../actions/todosModalActions";
 
 class Sections extends React.Component {
-  handleClick(data) {
+  handleClick = data => {
     if (data.buttonName === "Create Todos") {
-      this.props.todosActive();
+      this.props.openTodoModal("add");
     } else if (data.buttonName === "Create Users") {
-      this.props.usersActive();
+      this.props.openUserModal("add");
     }
-    history.push(data.goto);
-  }
+  };
   render() {
     return (
       <div>
@@ -20,7 +20,6 @@ class Sections extends React.Component {
           onClick={() => {
             this.handleClick(this.props);
           }}
-          title={this.props.buttonName}
         >
           {this.props.buttonName}
         </Button>
@@ -29,4 +28,4 @@ class Sections extends React.Component {
   }
 }
 
-export default connect(null, { todosActive, usersActive })(Sections);
+export default connect(null, { openUserModal, openTodoModal })(Sections);
