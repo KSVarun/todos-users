@@ -10,14 +10,14 @@ class Front extends React.Component {
     const { TabPane } = Tabs;
     return (
       <div className="ui container">
-        <Tabs>
-          <TabPane tab="Users" key="users">
-            <Sections buttonName="Create Users" />
-            <UserTable />
-          </TabPane>
+        <Tabs defaultActiveKey="todos">
           <TabPane tab="Todos" key="todos">
             <Sections buttonName="Create Todos" />
             <TodoTable />
+          </TabPane>
+          <TabPane tab="Users" key="users">
+            <Sections buttonName="Create Users" />
+            <UserTable />
           </TabPane>
         </Tabs>
       </div>

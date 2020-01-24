@@ -1,5 +1,5 @@
 import React from "react";
-import { Input, Form, Modal } from "antd";
+import { Input, Form, Modal, Button } from "antd";
 import { Formik, Field } from "formik";
 import { connect } from "react-redux";
 import * as yup from "yup";
@@ -18,35 +18,49 @@ const validationSchema = yup.object({
 });
 
 class TodoFormModal extends React.Component {
-  handleSubmit = (values, resetForm) => {
-    console.log(values);
+  handleSubmit = async (values, { resetForm }) => {
+    let request;
     if (this.props.todoForm.type === "add") {
-      this.props.createTodo(values);
+      request = this.props.createTodo(values);
     } else {
-      this.props.updateTodo(values);
+      request = this.props.updateTodo(values);
     }
-    this.props.closeTodoModal();
+    await request;
     resetForm();
   };
 
   render() {
     return (
       <Formik
-        enableReinitialize={true}
-        validateOnChange={true}
+        enableReinitialize
         initialValues={this.props.todoDetails}
         validationSchema={validationSchema}
-        onSubmit={(values, { resetForm }) =>
-          this.handleSubmit(values, resetForm)
-        }
+        onSubmit={this.handleSubmit}
       >
-        {({ values, handleSubmit, errors, touched }) => (
+        {({ handleSubmit, errors, touched }) => (
           <Form>
             <Modal
               title={this.props.todoForm.title}
               visible={this.props.todoForm.open}
               onOk={handleSubmit}
-              onCancel={() => this.props.closeTodoModal()}
+              onCancel={this.props.closeTodoModal}
+              footer={[
+                <Button
+                  disabled={this.props.todos.cancel}
+                  key="cancle"
+                  onClick={this.props.closeTodoModal}
+                >
+                  Return
+                </Button>,
+                <Button
+                  key="submit"
+                  type="primary"
+                  loading={this.props.todos.loading}
+                  onClick={handleSubmit}
+                >
+                  Submit
+                </Button>
+              ]}
             >
               <FormItem
                 help={touched.name && errors.name ? errors.name : ""}
@@ -75,11 +89,16 @@ class TodoFormModal extends React.Component {
 const mapStateToProps = state => {
   let todoDetails = { name: "", created: "" };
   if (state.todoForm.open && state.todoForm.type === "edit") {
-    todoDetails = state.todos.todos.find(
+    const todo = state.todos.todos.find(
       todo => todo.key === state.todoForm.key
     );
+    if (todo) {
+      todoDetails.name = todo.name;
+      todoDetails.created = todo.created;
+    }
   }
-  return { todoForm: state.todoForm, todoDetails };
+
+  return { todoForm: state.todoForm, todoDetails, todos: state.todos };
 };
 
 export default connect(mapStateToProps, {

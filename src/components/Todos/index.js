@@ -55,7 +55,7 @@ class TodoTables extends React.Component {
           columns={this.renderColumnHelper()}
           dataSource={this.renderDataHelper(this.props.todos.todos)}
           style={{ marginTop: "10px" }}
-          pagination={{ pageSize: "2", total: "20" }}
+          pagination={{ pageSize: 5 }}
         />
         <TodoFormModal />
       </div>
@@ -64,8 +64,6 @@ class TodoTables extends React.Component {
 }
 
 const mapStateToProps = state => {
-  console.log("todo table");
-  console.log(state);
   return { todos: state.todos };
 };
 

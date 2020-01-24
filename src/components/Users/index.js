@@ -50,6 +50,7 @@ class UserTables extends React.Component {
           columns={this.renderColumnHelper()}
           dataSource={this.renderDataHelper(this.props.users.users)}
           style={{ marginTop: "10px" }}
+          pagination={{ pageSize: 5 }}
         />
         <UserFormModal />
       </div>

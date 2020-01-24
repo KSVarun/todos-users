@@ -1,5 +1,5 @@
 import React from "react";
-import { Input, Form } from "antd";
+import { Input, Form, Button } from "antd";
 import { Formik, Field } from "formik";
 import { connect } from "react-redux";
 import * as yup from "yup";
@@ -23,14 +23,14 @@ const validationSchema = yup.object({
 });
 
 class UserFormModal extends React.Component {
-  handleSubmit = (values, resetForm) => {
-    console.log(values);
+  handleSubmit = async (values, { resetForm }) => {
+    let request;
     if (this.props.userForm.type === "add") {
-      this.props.createUser(values);
+      request = this.props.createUser(values);
     } else {
-      this.props.updateUser(values);
+      request = this.props.updateUser(values);
     }
-    this.props.closeUserModal();
+    await request;
     resetForm();
   };
 
@@ -41,9 +41,7 @@ class UserFormModal extends React.Component {
         validateOnChange={true}
         initialValues={this.props.userDetails}
         validationSchema={validationSchema}
-        onSubmit={(values, { resetForm }) =>
-          this.handleSubmit(values, resetForm)
-        }
+        onSubmit={this.handleSubmit}
       >
         {({ values, handleSubmit, errors, touched }) => (
           <Form>
@@ -51,7 +49,24 @@ class UserFormModal extends React.Component {
               title={this.props.userForm.title}
               visible={this.props.userForm.open}
               onOk={handleSubmit}
-              onCancel={() => this.props.closeUserModal()}
+              onCancel={this.props.closeUserModal}
+              footer={[
+                <Button
+                  disabled={this.props.users.cancel}
+                  key="cancle"
+                  onClick={this.props.closeUserModal}
+                >
+                  Return
+                </Button>,
+                <Button
+                  key="submit"
+                  type="primary"
+                  loading={this.props.users.loading}
+                  onClick={handleSubmit}
+                >
+                  Submit
+                </Button>
+              ]}
             >
               <FormItem
                 help={touched.name && errors.name ? errors.name : ""}
@@ -87,7 +102,7 @@ const mapStateToProps = state => {
       user => user.key === state.userForm.key
     );
   }
-  return { userForm: state.userForm, userDetails };
+  return { userForm: state.userForm, userDetails, users: state.users };
 };
 
 export default connect(mapStateToProps, {

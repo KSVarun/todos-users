@@ -1,14 +1,27 @@
+import { closeTodoModal } from "./todosModalActions";
+
 export const CREATE_TODO = "CREATE_TODOS";
 export const DELETE_TODO = "DELETE_TODO";
 export const UPDATE_TODO = "UPDATE_TODO";
+export const START_LOADING = "START_LOADING";
 
-export const createTodo = data => {
-  return {
-    type: CREATE_TODO,
-    payload: {
-      data
-    }
-  };
+function mockedTodoAction(data) {
+  return new Promise(resolve => {
+    setTimeout(() => resolve({ data }), 2000);
+  });
+}
+
+export const createTodo = data => async dispatch => {
+  dispatch({ type: START_LOADING });
+  return mockedTodoAction(data).then(response => {
+    dispatch({
+      type: CREATE_TODO,
+      payload: {
+        response
+      }
+    });
+    dispatch(closeTodoModal());
+  });
 };
 
 export const deleteTodo = key => {
@@ -18,9 +31,19 @@ export const deleteTodo = key => {
   };
 };
 
-export const updateTodo = data => {
+export const updateTodo = data => async dispatch => {
+  dispatch({ type: START_LOADING });
+  return mockedTodoAction(data).then(response => {
+    dispatch({
+      type: UPDATE_TODO,
+      payload: { response }
+    });
+    dispatch(closeTodoModal());
+  });
+};
+
+export const startLoading = () => {
   return {
-    type: UPDATE_TODO,
-    payload: { data }
+    type: START_LOADING
   };
 };
