@@ -7,6 +7,9 @@ import UserFormModal from "./UserFormModal";
 import { openUserModal } from "../../actions/userModalActions";
 
 class UserTables extends React.Component {
+  componentDidUpdate() {
+    localStorage.setItem("users", JSON.stringify(this.props.users.users));
+  }
   handleDelete(key) {
     this.props.deleteUser(key);
   }

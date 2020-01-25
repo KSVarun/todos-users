@@ -1,5 +1,7 @@
 import produce from "immer";
 import uuid from "uuid/v4";
+import moment from "moment";
+
 import {
   CREATE_TODO,
   DELETE_TODO,
@@ -7,14 +9,15 @@ import {
   START_LOADING
 } from "../actions/todosActions";
 
-const INITIAL_STATE = {
-  todos: [],
+var INITIAL_STATE = {
+  todos: !JSON.parse(localStorage.getItem("todos"))
+    ? []
+    : JSON.parse(localStorage.getItem("todos")),
   loading: false,
   cancel: false
 };
 
 export default function TodoReducer(state = INITIAL_STATE, action) {
-  console.log(action);
   return produce(state, draft => {
     switch (action.type) {
       case START_LOADING:
@@ -24,11 +27,15 @@ export default function TodoReducer(state = INITIAL_STATE, action) {
 
       case CREATE_TODO:
         const key = uuid();
-        draft.todos.push({
-          name: action.payload.response.data.name,
-          created: Date.now(),
-          key
-        });
+        draft.todos = [
+          ...draft.todos,
+          {
+            name: action.payload.response.data.name,
+            created: moment().format("MMMM Do, h:mm"),
+            key
+          }
+        ];
+
         draft.loading = false;
         draft.cancel = false;
         break;

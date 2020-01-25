@@ -3,7 +3,7 @@ import { closeTodoModal } from "./todosModalActions";
 export const CREATE_TODO = "CREATE_TODOS";
 export const DELETE_TODO = "DELETE_TODO";
 export const UPDATE_TODO = "UPDATE_TODO";
-export const START_LOADING = "START_LOADING";
+export const START_LOADING = "START_TODOS_LOADING";
 
 function mockedTodoAction(data) {
   return new Promise(resolve => {

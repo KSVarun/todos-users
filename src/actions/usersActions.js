@@ -2,7 +2,7 @@ import { closeUserModal } from "./userModalActions";
 export const CREATE_USER = "CREATE_USER";
 export const DELETE_USER = "DELETE_USER";
 export const UPDATE_USER = "UPDATE_USER";
-export const START_LOADING = "START_LOADING";
+export const START_LOADING = "START_USERS_LOADING";
 
 function mockedUserAction(data) {
   return new Promise(resolve => {

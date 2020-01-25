@@ -69,7 +69,7 @@ class TodoFormModal extends React.Component {
                 }
               >
                 <label>Name</label>
-                <Field name="name" type="text" as={Input}></Field>
+                <Field autoFocus name="name" type="text" as={Input}></Field>
               </FormItem>
               {this.props.todoForm.type === "edit" && (
                 <FormItem>
@@ -77,7 +77,6 @@ class TodoFormModal extends React.Component {
                   <div>{this.props.todoDetails.created}</div>
                 </FormItem>
               )}
-              <pre>{JSON.stringify()}</pre>
             </Modal>
           </Form>
         )}

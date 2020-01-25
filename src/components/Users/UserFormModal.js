@@ -75,7 +75,7 @@ class UserFormModal extends React.Component {
                 }
               >
                 <label>Name</label>
-                <Field name="name" type="text" as={Input}></Field>
+                <Field autoFocus name="name" type="text" as={Input}></Field>
               </FormItem>
               <FormItem
                 help={touched.email && errors.email ? errors.email : ""}
@@ -86,7 +86,6 @@ class UserFormModal extends React.Component {
                 <label>Email</label>
                 <Field name="email" type="text" as={Input}></Field>
               </FormItem>
-              <pre>{JSON.stringify()}</pre>
             </Modal>
           </Form>
         )}

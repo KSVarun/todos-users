@@ -1,5 +1,5 @@
 import React from "react";
-import { Table, Divider, Button, Pagination } from "antd";
+import { Table, Divider, Button } from "antd";
 import { connect } from "react-redux";
 
 import { deleteTodo } from "../../actions/todosActions";
@@ -7,6 +7,9 @@ import { openTodoModal } from "../../actions/todosModalActions";
 import TodoFormModal from "./TodoFormModal";
 
 class TodoTables extends React.Component {
+  componentDidUpdate() {
+    localStorage.setItem("todos", JSON.stringify(this.props.todos.todos));
+  }
   handleDelete(key) {
     this.props.deleteTodo(key);
   }

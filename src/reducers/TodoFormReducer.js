@@ -1,5 +1,6 @@
-import { TodoFormActionTypes } from "../actions/todosModalActions";
 import produce from "immer";
+
+import { TodoFormActionTypes } from "../actions/todosModalActions";
 
 const INITIAL_STATE = {
   open: false,

@@ -8,7 +8,9 @@ import {
 } from "../actions/usersActions";
 
 const INITIAL_STATE = {
-  users: [],
+  users: !JSON.parse(localStorage.getItem("users"))
+    ? []
+    : JSON.parse(localStorage.getItem("users")),
   loading: false,
   cancel: false
 };
@@ -21,12 +23,19 @@ export default function UserReducer(state = INITIAL_STATE, action) {
         draft.cancel = true;
         break;
       case CREATE_USER:
-        console.log(action);
-        draft.users.push({
-          name: action.payload.response.data.name,
-          email: action.payload.response.data.email,
-          key: uuid()
-        });
+        // draft.users.push({
+        //   name: action.payload.response.data.name,
+        //   email: action.payload.response.data.email,
+        //   key: uuid()
+        // });
+        draft.users = [
+          ...draft.users,
+          {
+            name: action.payload.response.data.name,
+            email: action.payload.response.data.email,
+            key: uuid()
+          }
+        ];
         draft.loading = false;
         draft.cancel = false;
         break;
