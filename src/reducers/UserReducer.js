@@ -1,10 +1,12 @@
 import produce from "immer";
 import uuid from "uuid/v4";
+
 import {
   CREATE_USER,
   DELETE_USER,
   UPDATE_USER,
-  START_LOADING
+  START_LOADING,
+  SEARCH_USER
 } from "../actions/usersActions";
 
 const INITIAL_STATE = {
@@ -12,7 +14,9 @@ const INITIAL_STATE = {
     ? []
     : JSON.parse(localStorage.getItem("users")),
   loading: false,
-  cancel: false
+  cancel: false,
+  searchedResult: [],
+  searching: false
 };
 
 export default function UserReducer(state = INITIAL_STATE, action) {
@@ -54,6 +58,17 @@ export default function UserReducer(state = INITIAL_STATE, action) {
         draft.users = draft.users.filter(
           user => user.key !== action.payload.key
         );
+        break;
+      case SEARCH_USER:
+        draft.searching = true;
+        let result = draft.users.filter(user => {
+          return user.name.indexOf(action.payload.key) !== -1;
+        });
+        if (result.length > 0) {
+          draft.searchedResult = result;
+        } else {
+          draft.searching = false;
+        }
         break;
       default:
         break;

@@ -4,6 +4,14 @@ export const CREATE_TODO = "CREATE_TODOS";
 export const DELETE_TODO = "DELETE_TODO";
 export const UPDATE_TODO = "UPDATE_TODO";
 export const START_LOADING = "START_TODOS_LOADING";
+export const SEARCH_TODO = "SEARCH_TODO";
+
+export const searchTodo = key => {
+  return {
+    type: SEARCH_TODO,
+    payload: { key }
+  };
+};
 
 function mockedTodoAction(data) {
   return new Promise(resolve => {

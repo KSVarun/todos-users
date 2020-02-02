@@ -3,6 +3,14 @@ export const CREATE_USER = "CREATE_USER";
 export const DELETE_USER = "DELETE_USER";
 export const UPDATE_USER = "UPDATE_USER";
 export const START_LOADING = "START_USERS_LOADING";
+export const SEARCH_USER = "SEARCH_USER";
+
+export const searchUser = key => {
+  return {
+    type: SEARCH_USER,
+    payload: { key }
+  };
+};
 
 function mockedUserAction(data) {
   return new Promise(resolve => {

@@ -51,15 +51,32 @@ class TodoTables extends React.Component {
     return data;
   }
 
-  render() {
-    return (
-      <div>
+  renderTableHelper() {
+    if (this.props.todos.searching) {
+      return (
+        <Table
+          columns={this.renderColumnHelper()}
+          dataSource={this.renderDataHelper(this.props.todos.searchedResult)}
+          style={{ marginTop: "10px" }}
+          pagination={{ pageSize: 5 }}
+        />
+      );
+    } else {
+      return (
         <Table
           columns={this.renderColumnHelper()}
           dataSource={this.renderDataHelper(this.props.todos.todos)}
           style={{ marginTop: "10px" }}
           pagination={{ pageSize: 5 }}
         />
+      );
+    }
+  }
+
+  render() {
+    return (
+      <div>
+        {this.renderTableHelper()}
         <TodoFormModal />
       </div>
     );

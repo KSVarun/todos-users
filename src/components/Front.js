@@ -12,11 +12,11 @@ class Front extends React.Component {
       <div className="ui container">
         <Tabs defaultActiveKey="todos">
           <TabPane tab="Todos" key="todos">
-            <Sections buttonName="Create Todos" />
+            <Sections buttonName="Create Todos" tab="todos" />
             <TodoTable />
           </TabPane>
           <TabPane tab="Users" key="users">
-            <Sections buttonName="Create Users" />
+            <Sections buttonName="Create Users" tab="users" />
             <UserTable />
           </TabPane>
         </Tabs>

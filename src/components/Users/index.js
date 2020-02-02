@@ -46,15 +46,32 @@ class UserTables extends React.Component {
     return data;
   }
 
-  render() {
-    return (
-      <div>
+  renderTableHelper() {
+    if (this.props.users.searching) {
+      return (
+        <Table
+          columns={this.renderColumnHelper()}
+          dataSource={this.renderDataHelper(this.props.users.searchedResult)}
+          style={{ marginTop: "10px" }}
+          pagination={{ pageSize: 5 }}
+        />
+      );
+    } else {
+      return (
         <Table
           columns={this.renderColumnHelper()}
           dataSource={this.renderDataHelper(this.props.users.users)}
           style={{ marginTop: "10px" }}
           pagination={{ pageSize: 5 }}
         />
+      );
+    }
+  }
+
+  render() {
+    return (
+      <div>
+        {this.renderTableHelper()}
         <UserFormModal />
       </div>
     );

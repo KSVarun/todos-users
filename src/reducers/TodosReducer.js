@@ -6,7 +6,8 @@ import {
   CREATE_TODO,
   DELETE_TODO,
   UPDATE_TODO,
-  START_LOADING
+  START_LOADING,
+  SEARCH_TODO
 } from "../actions/todosActions";
 
 var INITIAL_STATE = {
@@ -14,7 +15,9 @@ var INITIAL_STATE = {
     ? []
     : JSON.parse(localStorage.getItem("todos")),
   loading: false,
-  cancel: false
+  cancel: false,
+  searchedResult: [],
+  searching: false
 };
 
 export default function TodoReducer(state = INITIAL_STATE, action) {
@@ -44,7 +47,6 @@ export default function TodoReducer(state = INITIAL_STATE, action) {
         const todo = draft.todos.find(
           todo => todo.key === action.payload.response.data.key
         );
-
         todo.name = action.payload.response.data.name;
         draft.loading = false;
         draft.cancel = false;
@@ -55,7 +57,17 @@ export default function TodoReducer(state = INITIAL_STATE, action) {
           todo => todo.key !== action.payload.key
         );
         break;
-
+      case SEARCH_TODO:
+        draft.searching = true;
+        let result = draft.todos.filter(todo => {
+          return todo.name.indexOf(action.payload.key) !== -1;
+        });
+        if (result.length > 0) {
+          draft.searchedResult = result;
+        } else {
+          draft.searching = false;
+        }
+        break;
       default:
         break;
     }

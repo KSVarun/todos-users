@@ -86,15 +86,11 @@ class TodoFormModal extends React.Component {
 }
 
 const mapStateToProps = state => {
-  let todoDetails = { name: "", created: "" };
+  let todoDetails = { name: "", created: "", key: "" };
   if (state.todoForm.open && state.todoForm.type === "edit") {
-    const todo = state.todos.todos.find(
+    todoDetails = state.todos.todos.find(
       todo => todo.key === state.todoForm.key
     );
-    if (todo) {
-      todoDetails.name = todo.name;
-      todoDetails.created = todo.created;
-    }
   }
 
   return { todoForm: state.todoForm, todoDetails, todos: state.todos };
